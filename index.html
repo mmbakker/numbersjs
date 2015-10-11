@@ -3,7 +3,7 @@
     <head>
         <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-        <script src="numbersjs.js"></script>
+        <script src="lib/numbersjs.js"></script>
 
         <script>
 
@@ -90,7 +90,7 @@
                             insertExample(1, [1, 2, 3.499999, 17500, 7.5000], {
                                 decimalSeparator: '.',
                                 thousandSeparator: ',',
-                                roundToDecimals: 2,
+                                roundTo: 2,
                                 forceDecimals: false
                             });
                         }());
@@ -120,7 +120,7 @@
                             insertExample(2, [1, 2, 3.499999, 17500, 7.5000], {
                                 decimalSeparator: '.',
                                 thousandSeparator: ',',
-                                roundToDecimals: 2,
+                                roundTo: 2,
                                 forceDecimals: true
                             });
                         }());
@@ -151,7 +151,37 @@
                                 decimalSeparator: '.',
                                 thousandSeparator: ',',
                                 roundTo: -3,
-                                forceDecimals: true
+                                forceDecimals: false
+                            });
+                        }());
+                    </script>
+                </div>
+
+                <div class="col-sm-3">
+                    <pre id="config-4"></pre>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-right">Original value</th>
+                                    <th class="text-right">Formatted value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="target-4">
+                                <tr id="rowTemplate-4">
+                                    <td class="text-right"></td>
+                                    <td class="text-right"><strong></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        (function(){
+                            insertExample(4, [1, 2, 3.499999, 17500, (+new Date)], {
+                                decimalSeparator: '/',
+                                thousandSeparator: ' ',
+                                roundTo: false,
+                                forceDecimals: false
                             });
                         }());
                     </script>
