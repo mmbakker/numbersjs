@@ -2,36 +2,21 @@
 <html>
     <head>
         <link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    </head>
-    <body>
-        <h1>numbersjs test</h1>
-        <p>This page briefly tests the numbersjs library.</p>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Original value</th>
-                    <th>Formatted value</th>
-                </tr>
-            </thead>
-            <tbody id="target">
-                <tr id="rowTemplate">
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
-        </table>
 
         <script src="numbersjs.js"></script>
+
         <script>
-            (function(){
+
+            function insertExample(id, numbers, config)
+            {
                 var newNode,
-                    numbers         = [1, 10, 123.456, 42.1059042, 0.1],
-                    formatter       = new MB.NumberFormatter();
+                    formatter       = new MB.NumberFormatter(config),
                     i               = 0,
                     n               = numbers.length,
-                    domNodeTemplate = document.getElementById('rowTemplate'),
-                    domTarget       = document.getElementById('target');
+                    domNodeTemplate = document.getElementById('rowTemplate-' + id),
+                    domTarget       = document.getElementById('target-' + id);
+
+                showConfig(id, config);
 
                 domNodeTemplate.parentNode.removeChild(domNodeTemplate);
                 domNodeTemplate.id = '';
@@ -40,11 +25,140 @@
                     newNode = domNodeTemplate.cloneNode(true);
 
                     newNode.getElementsByTagName('td')[0].innerHTML = numbers[i];
-                    newNode.getElementsByTagName('td')[1].innerHTML = formatter.format(numbers[i]);
+                    newNode.getElementsByTagName('td')[1].firstChild.innerHTML = formatter.format(numbers[i]);
 
                     domTarget.appendChild(newNode);
                 }
-            }());
+            }
+
+            function showConfig(id, config)
+            {
+                var key,
+                    output    = '{'
+                    domTarget = document.getElementById('config-' + id);
+
+                for (key in config) {
+                    output += "\n" + '    ' + key + ': ' + getConfigValue(config[key]) + ',';
+                }
+
+                output  = output.substr(0, output.length - 1);
+                output += "\n" + '}';
+
+                domTarget.innerHTML = output;
+            }
+
+            function getConfigValue(value)
+            {
+                return typeof value === 'string' ? "'" + value + "'" : value;
+            }
+
         </script>
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1>numbersjs examples</h1>
+                    <p>Please refer to the examples below.</p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-sm-3">
+                    <pre id="config-1"></pre>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-right">Original value</th>
+                                    <th class="text-right">Formatted value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="target-1">
+                                <tr id="rowTemplate-1">
+                                    <td class="text-right"></td>
+                                    <td class="text-right"><strong></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        (function(){
+                            insertExample(1, [1, 2, 3.499999, 17500, 7.5000], {
+                                decimalSeparator: '.',
+                                thousandSeparator: ',',
+                                roundToDecimals: 2,
+                                forceDecimals: false
+                            });
+                        }());
+                    </script>
+                </div>
+
+                <div class="col-sm-3">
+                    <pre id="config-2"></pre>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-right">Original value</th>
+                                    <th class="text-right">Formatted value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="target-2">
+                                <tr id="rowTemplate-2">
+                                    <td class="text-right"></td>
+                                    <td class="text-right"><strong></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        (function(){
+                            insertExample(2, [1, 2, 3.499999, 17500, 7.5000], {
+                                decimalSeparator: '.',
+                                thousandSeparator: ',',
+                                roundToDecimals: 2,
+                                forceDecimals: true
+                            });
+                        }());
+                    </script>
+                </div>
+
+                <div class="col-sm-3">
+                    <pre id="config-3"></pre>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th class="text-right">Original value</th>
+                                    <th class="text-right">Formatted value</th>
+                                </tr>
+                            </thead>
+                            <tbody id="target-3">
+                                <tr id="rowTemplate-3">
+                                    <td class="text-right"></td>
+                                    <td class="text-right"><strong></strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        (function(){
+                            insertExample(3, [1, 2, 3.499999, 17500, (+new Date)], {
+                                decimalSeparator: '.',
+                                thousandSeparator: ',',
+                                roundTo: -3,
+                                forceDecimals: true
+                            });
+                        }());
+                    </script>
+                </div>
+
+            </div>
+
+        </div>
     </body>
 </html>
