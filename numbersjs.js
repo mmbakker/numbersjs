@@ -20,7 +20,7 @@
 
     function NumberFormatter(settings)
     {
-        this.config = defaultSettings || settings;
+        this.config = settings || defaultSettings;
     }
 
     NumberFormatter.version = version;
@@ -45,7 +45,7 @@
 
         formattingHelper = formattedValue.toString().split('.');
         characteristic   = formattingHelper[0];
-        decimals         = formattingHelper[1] || '0';
+        decimals         = formattingHelper[1] || '';
 
         // Format thousand separator.
         if (this.config.thousandSeparator) {
@@ -53,7 +53,7 @@
 
             if (characteristic.length > 3) {
                 while (characteristic.length > 3) {
-                    formattingHelper = characteristic.substr(-3) + this.config.thousandSeparator + formattingHelper;
+                    formattingHelper = characteristic.substr(-3) + (formattingHelper.length ? this.config.thousandSeparator + formattingHelper : '');
                     characteristic   = characteristic.substr(0, characteristic.length - 3);
                 }
 
@@ -73,11 +73,16 @@
         }
 
         // Add decimal separator.
-        formattedValue = characteristic + this.config.decimalSeparator + decimals;
+        formattedValue = characteristic;
+
+        if (decimals.length) {
+            formattedValue += this.config.decimalSeparator + decimals;
+        }
 
         return formattedValue;
     };
 
+    // Add to the MB namespace.
     window.MB = window.MB || {};
     window.MB.NumberFormatter = NumberFormatter;
 
