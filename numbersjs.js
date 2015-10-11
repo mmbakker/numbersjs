@@ -12,10 +12,10 @@
 
     var version = '0.0.1',
         defaultSettings = {
-            decimalSeparator : '.', // E.g. 123.45
-            thousandSeparator: ',', // E.g. 12,000 for twelve thousand
-            roundToDecimals: 2,     // Round to this many decimals; FALSE to disable
-            forceDecimals: false    // Add trailing zeroes if less than the number
+            decimalSeparator : '.',  // E.g. 123.45
+            thousandSeparator: ',',  // E.g. 12,000 for twelve thousand
+            roundTo          : 2,    // Round to this many decimals; negative for rounding to whole numbers; FALSE to disable
+            forceDecimals    : false // Add trailing zeroes if less than the number
         };
 
     function NumberFormatter(settings)
@@ -35,8 +35,8 @@
         }
 
         // Round.
-        if (!isNaN(this.config.roundToDecimals) || isFinite(this.config.roundToDecimals)) {
-            roundingFactor = Math.pow(10, this.config.roundToDecimals);
+        if (!isNaN(this.config.roundTo) || isFinite(this.config.roundTo)) {
+            roundingFactor = Math.pow(10, this.config.roundTo);
 
             formattedValue = formattedValue * roundingFactor;
             formattedValue = Math.round(formattedValue);
@@ -67,7 +67,7 @@
 
         // Add trailing zeroes if required.
         if (this.config.forceDecimals) {
-            while (decimals.length < this.config.roundToDecimals) {
+            while (decimals.length < this.config.roundTo) {
                 decimals += '0';
             }
         }
