@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="stylesheet" media="all" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    </head>
+    <body>
+        <h1>numbersjs test</h1>
+        <p>This page briefly tests the numbersjs library.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Original value</th>
+                    <th>Formatted value</th>
+                </tr>
+            </thead>
+            <tbody id="target">
+                <tr id="rowTemplate">
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script src="numbersjs.js"></script>
+        <script>
+            (function(){
+                var newNode,
+                    numbers         = [1, 10, 123.456, 42.1059042, 0.1],
+                    formatter       = new MB.NumberFormatter();
+                    i               = 0,
+                    n               = numbers.length,
+                    domNodeTemplate = document.getElementById('rowTemplate'),
+                    domTarget       = document.getElementById('target');
+
+                domNodeTemplate.parentNode.removeChild(domNodeTemplate);
+                domNodeTemplate.id = '';
+
+                for (; i < n; i++) {
+                    newNode = domNodeTemplate.cloneNode(true);
+
+                    newNode.getElementsByTagName('td')[0].innerHTML = numbers[i];
+                    newNode.getElementsByTagName('td')[1].innerHTML = formatter.format(numbers[i]);
+
+                    domTarget.appendChild(newNode);
+                }
+            }());
+        </script>
+    </body>
+</html>
